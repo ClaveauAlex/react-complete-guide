@@ -12,18 +12,6 @@ class App extends Component {
     showPersons: false,
   };
 
-  switchNameHandler = (newName) => {
-    // console.log("Was cliked !");
-    // Don't do this ! this.state.persons[0].name = "Maximilian";
-    this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: "Manu", age: 29 },
-        { name: "Stephanie", age: 27 },
-      ],
-    });
-  };
-
   nameChangeHandler = (event) => {
     this.setState({
       persons: [
@@ -39,6 +27,12 @@ class App extends Component {
     this.setState({ showPersons: !doesShow });
   };
 
+  deletePersonsHandler = (personIndex) => {
+    const persons = this.state.persons;
+    persons.slice(personIndex, 1);
+    this.setState({persons: persons});
+  }
+
   render() {
     const style = {
       backgroundColor: "white",
@@ -53,22 +47,9 @@ class App extends Component {
     if (this.state.showPersons) {
       persons = (
         <div>
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age}
-          />
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, "Max!")}
-            changed={this.nameChangeHandler}
-          >
-            My hobbies: Racing
-          </Person>
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age}
-          />
+          {this.state.persons.map((person, index) => {
+            return <Person name={person.name} age={person.age} click={() => this.deletePersonsHandler(index)}  />;
+          })}
         </div>
       );
     }
