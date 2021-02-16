@@ -5,9 +5,9 @@ import Person from "./Person/Person";
 class App extends Component {
   state = {
     persons: [
-      { name: "Max", age: 28 },
-      { name: "Manu", age: 29 },
-      { name: "Stephanie", age: 26 },
+      { id:"azert", name: "Max", age: 28 },
+      { id:"azerti", name: "Manu", age: 29 },
+      { id:"azertio",name: "Stephanie", age: 26 },
     ],
     showPersons: false,
   };
@@ -28,10 +28,11 @@ class App extends Component {
   };
 
   deletePersonsHandler = (personIndex) => {
-    const persons = this.state.persons;
+    // const persons = this.state.persons;
+    const persons = [...this.state.persons];
     persons.slice(personIndex, 1);
-    this.setState({persons: persons});
-  }
+    this.setState({ persons: persons });
+  };
 
   render() {
     const style = {
@@ -48,7 +49,14 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person name={person.name} age={person.age} click={() => this.deletePersonsHandler(index)}  />;
+            return (
+              <Person
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePersonsHandler(index)}
+                key={person.id}
+              />
+            );
           })}
         </div>
       );
