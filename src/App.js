@@ -1,24 +1,39 @@
 import React, { Component } from "react";
 import "./App.css";
 import Person from "./Person/Person";
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+  background-color: green;
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover{
+    background-color: lightgreen;
+    color: black;
+  }
+`;
 
 class App extends Component {
   state = {
     persons: [
-      { id:"azert", name: "Max", age: 28 },
-      { id:"azerti", name: "Manu", age: 29 },
-      { id:"azertio",name: "Stephanie", age: 26 },
+      { id: "azert", name: "Max", age: 28 },
+      { id: "azerti", name: "Manu", age: 29 },
+      { id: "azertio", name: "Stephanie", age: 26 },
     ],
     showPersons: false,
   };
 
   nameChangeHandler = (event, id) => {
-    const personsIndex = this.state.persons.findIndex(p => {
+    const personsIndex = this.state.persons.findIndex((p) => {
       return p.id === id;
     });
 
     const person = {
-      ...this.state.persons[personsIndex]
+      ...this.state.persons[personsIndex],
     };
 
     person.name = event.target.value;
@@ -26,9 +41,8 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personsIndex] = person;
 
-
     this.setState({
-      persons: person
+      persons: person,
     });
   };
 
@@ -45,15 +59,6 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: "green",
-      color: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-    };
-
     let persons = null;
 
     if (this.state.showPersons) {
@@ -72,24 +77,24 @@ class App extends Component {
           })}
         </div>
       );
-      style.backgroundColor = 'red';
+      // style.backgroundColor = "red";
     }
 
     let classes = [];
-    if (this.state.persons.length <=2) {
-      classes.push('red');
+    if (this.state.persons.length <= 2) {
+      classes.push("red");
     }
-    if (this.state.persons.length <=1) {
-      classes.push('bold');
+    if (this.state.persons.length <= 1) {
+      classes.push("bold");
     }
 
     return (
       <div className="App">
         <h1>Hey I'm a React App</h1>
-        <p className={classes.join(' ')}>This is working</p>
-        <button style={style} onClick={this.togglePersonsHandler}>
+        <p className={classes.join(" ")}>This is working</p>
+        <StyledButton onClick={this.togglePersonsHandler}>
           Toggle Persons
-        </button>
+        </StyledButton>
         {persons}
       </div>
     );
